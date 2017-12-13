@@ -1,0 +1,765 @@
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Laboratório 10: Autômato musical</title>
+    <style>
+        body {
+            background-color: #f1f1f1;
+            font-family: sans-serif;
+            padding: 30px;
+            text-align: justify;
+        }
+        h1 {
+            font-size: 16pt;
+        }
+        .codigo {
+            /* Utilizado para expressar códigos fonte no enunciado */
+            font-size: 11pt;
+            color: maroon;
+        }
+        .entrada {
+            /* Utilizado para expressar dados de entrada */
+            font-size: 11pt;
+            color: blue;
+        }
+        .saida {
+            /* Utilizado para expressar informações de saídas */
+            font-size: 11pt;
+            color: black;
+        }
+        .imgContainer{
+            float:left;
+        }
+        tr:nth-child(odd) {
+                background-color: #dddddd;
+        }
+        tr:nth-child(even) {
+                background-color: #c9c9c9;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div style="width: 100%; display: table-cell; content-align:middle; text-align:center; vertical-align:middle;">
+            <h1>Instituto de Computação - UNICAMP</h1>
+            <h2>MC102 - Algoritmos e Programação de Computadores</h2>
+        </div>
+        <div style="width:20%;display: table-cell; vertical-align: middle;">
+            <img src="ic.png" width="120px">
+        </div>
+        <hr>
+        <div>
+            <h2>Laboratório 10: Autômato musical</h2>
+            <h3>Segundo Semestre de 2017 - Turmas Coordenadas</h3>
+            <p>Peso da Atividade: 2</p>
+            <p>Prazo de Entrega: <u>20 de outubro de 2017 às 23:59:59</u></p>
+        </div>
+        
+        <div style="margin-top:30px;">
+            <h3>Conteúdo</h3>
+            <div style="margin-left:20px;">
+                <a href="#contexto">Contexto</a>
+                <br>
+                <a href="#tarefa">Tarefa</a>
+                <br>
+                <a href="#exemplos">Exemplos</a>
+                <br>
+                <a href="#observacoesDaTarefa">Observações da Tarefa</a>
+                <br>
+                <a href="#observacoes">Observações Gerais</a>
+                <br>
+                <a href="#criterios">Critérios Importantes</a>
+                <br>
+                <a href="#curiosidades">Para Curiosos Interessados</a>
+                <br>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id="contexto" style="margin-top: 20px;">
+        <h3>Contexto</h3>
+        
+        <div style="width: 50%; text-align: center; display: block; margin: 0 auto;">
+            <h3><em><strong>
+                "Jeune homme, vous commencez par où je voudrais finir."
+            </strong></em></h3>
+            <p style="margin: -10px 0 20px 200px"><small>
+                – Jacques de Vaucanson
+            </small></p>
+        </div>
+        <div align="center">
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/u8u93VQfHmw?rel=0&amp;start=600" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <p>
+        Em toda Suíça, não há melhor relojoaria do que aquela em que você trabalha. Vocês fabricam os mecanismos mais precisos e avançados. Agora, vocês estão preparando mais uma maravilha de inovação tecnológica para aumentar a venda de seus famosos relógios-cuco. Ano passado, em 1793, Johann Julius Hummel publicou em Berlim <a href="https://mozart.qvwx.de/download/K516f.pdf"><i>Anleitung so viel Walzer oder Schleifer mit zwei Würfeln zu componiren so viel man will ohne musikalisch zu seyn noch etwas von der Composition zu verstehe</i></a>, cuja autoria é atribuída a Wolfgang Amadeus Mozart. Como o título diz, a obra permite que pessoas sem conhecimento algum na área de composição musical componham tantas valsas ou ländler quantos queiram. É claro que vocês não podiam deixar passar a oportunidade de incorporar isto na sua próxima criação, o autômato <b>le Chef d'Orchestre à Ressort</b>, que pretendem dar de presente ao Imperador Franz II, por ocasião do seu trigésimo aniversário.
+        </p>
+        <div style="text-align:center;" id="figura1">
+            <a href="https://upload.wikimedia.org/wikipedia/commons/8/8d/Ornamented_Coat_of_Arms_of_Leopold_II_and_Francis_II%2C_Holy_Roman_Emperors.svg"><img src="https://upload.wikimedia.org/wikipedia/commons/8/8d/Ornamented_Coat_of_Arms_of_Leopold_II_and_Francis_II%2C_Holy_Roman_Emperors.svg" width="512px"></a>
+            <br>
+            <i>Brasão do sacro imperador romano-germânico </i>Franz II,<i> ladeado de grifos rampantes, em formato SVG.</i>
+        </div>
+        <p>
+        A maravilha mecânica que vocês estão construindo produzirá sempre músicas novas, com sons diversificados, por meio da permutação do uso de cilindros com linguetas. O funcionamento geral do <b>Chef d'Orchestre à Ressort</b> é o seguinte: quando o mecanismo do barril é liberado, uma nova música é gerada com até nove dos 128 <i>timbres sonoros</i> que serão produzidos pelo autômato. Para cada timbre sonoro, o sistema seleciona aleatoriamente <i>trechos</i> entre uma série de opções dadas em <i>tabelas musicais.</i> Tais tabelas podem ser transcritas a partir da obra de Hummel. Alguns colegas seus estão trabalhando na parte de aleatorização. Outros estão trabalhando nos mecanismos de geração dos sons. Seu papel será modelar o funcionamento da parte que traduz as informações colhidas das tabelas musicais em eventos mecânicos para a correta realização sonora. Em outras palavras, na Interface Digital para Instrumentos Musicais (MIDI).
+        </p>
+        <p>
+        Como dito anteriormente, a máquina possui 128 timbres sonoros. É preciso um intrincado controle dos mecanismos de acoplamento e desacoplamento para determinar quais deverão soar. A transmissão da energia liberada pela mola até o mecanismo gerador do timbre sonoro selecionado se dá por meio de um alocador denominado <i>canal</i>. A energia da máquina é capaz de acionar no máximo nove canais simultaneamente. Dois canais podem acionar o mesmo timbre sonoro e nem todas as músicas usam todos os nove canais. Em uma dada música, um canal usa sempre o mesmo timbre sonoro.
+        </p>
+        <p>
+        O mecanismo que gera todo o projeto para a música termina seu funcionamento antes que qualquer som seja emitido. Tal mecanismo monta uma sequência de notas que deverá ser tocada ao longo da música em cada canal. Cada nota tem sua <i>frequência</i> (de mais grave a mais aguda), sua <i>duração</i> (contada em múltiplos da duração mínima) e sua <i>intensidade</i> (de mais fraca a mais forte em volume sonoro). As informações são transmitidas pelos canais na forma de <i>eventos</i> de dois tipos: início ou fim de nota. O canal deve soar a nota especificada pelo evento que a iniciou até que outro evento a silencie. Um mecanismo giratório regula a máquina e a cada vez que completa uma volta transmite para cada canal até dois eventos que ocorrem simultaneamente na música. Quando há dois eventos para um mesmo canal em uma dada volta, o primeiro é para interromper uma nota que esteja soando e o segundo para iniciar uma nota (que pode, inclusive, ser igual à anterior).
+        </p>
+    </div>
+    
+    
+    <hr>
+    
+    <div id="tarefa" style="margin-top: 20px;">
+        <h3>Tarefa</h3>
+        <p>
+        Implementar um programa que:
+        </p>
+        <p><ul>
+        <li>receba, como entrada, tanto as tabelas musicais com os trechos de música que serão tocados quanto as informações sobre quais trechos devem ser tocados em cada canal, com que timbre sonoro e em qual ordem;</li>
+        <li>produza, como saída, os eventos ordenados que permitirão a realização mecânica da música. As sequências de todos os canais empregados devem começar simultaneamente.</li>
+        </ul><p>
+        </p>
+        A seguir, a entrada e a saída do programa estão detalhadas.
+        </p>
+        <p><b><h4{display: inline;}>&nbsp &nbsp Entrada</h4></b> 
+        <ul>
+            <li>A primeira linha contém valor <code class="entrada">i</code>, <code class="entrada">1</code> <= <code class="entrada">i</code> <= <code class="entrada">9</code>, que representa o número de canais usados na instância.</li>
+            <li>A linha seguinte conterá <code class="entrada">i</code> números entre um e 128, especificando o timbre sonoro que será acionado por cada canal.</li>
+            <li>Na terceira linha há os valores <code class="entrada">j</code> e <code class="entrada">k</code>:
+            <ul>
+                <li><code class="entrada">j</code> representa o número de trechos presentes na sequência de cada canal, contando repetições do mesmo trecho.</li>
+                <li><code class="entrada">k</code> representa o número de trechos na tabela musical e estão apresentados nos <code class="entrada">k</code> pares de linhas seguintes.</li>
+            </ul>
+            </li>
+            <li>2<code class="entrada">k</code> linhas, tais que cada par de linhas tem o formato explicitado abaixo.
+            <ul>
+                <li>A primeira linha do par contém três valores, na ordem a seguir:
+                <ul>
+                    <li>O identificador do trecho (um inteiro de 1 a <code class="entrada">k</code>);</li>
+                    <li>A intensidade em que as notas do trecho devem ser tocadas;</li>
+                    <li>O número de notas ou pausas (silêncios) em sequência que formam o trecho.</li>
+                </ul>
+                </li>
+                <li>A segunda linha do par contém a sequência de notas ou pausas, cada uma representada por dois números:
+                <ul>
+                    <li>O primeiro representará a duração da nota ou pausa;</li>
+                    <li>O seguinte será um número de zero a 127 codificando a <a href="#curiosidades">frequência</a> da nota, ou 128 para uma pausa.</li>
+                </ul>
+            </ul>
+            <li>Após as 2<code class="entrada">k</code> linhas que descrevem os trechos, seguem <code class="entrada">i</code> linhas com <code class="entrada">j</code> números cada. Cada uma das <code class="entrada">i</code> linhas representa a sequência de trechos que compõe um canal. As linhas serão apresentadas na mesma ordem em que os canais foram apresentados. Em cada linha, os <code class="entrada">j</code> números são os números dos trechos para o canal, na ordem em que devem ser tocados.</li>
+        </ul>
+        </p>
+        <p>
+        Observe a seguir a entrada do <a href="#exemploExec01">exemplo 1</a> comentada.
+        </p>
+        <div style="margin-left:30px;">
+            <table>
+            <tbody>
+            <tr><td><code class="entrada">3</code></td><td><span style="float:right;"><code class="saida" style="text-align:right"><code class="entrada">3</code> canais</code></span></td></tr>
+            <tr><td><code class="entrada">54 53 54</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">um deles com o timbre sonoro <code class="entrada">53</code> e dois com o <code class="entrada">54</code></code></span></td></tr>
+            <tr><td><code class="entrada">12 6</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">a sequência para cada canal tem <code class="entrada">12</code> trechos, a tabela musical tem <code class="entrada">6</code></code></span></td></tr>
+            <tr><td><code class="entrada">1 127 4</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">o <code class="entrada">1</code>º trecho da tabela tem intensidade <code class="entrada">127</code> e <code class="entrada">4</code> notas</code></span></td></tr>
+            <tr><td><code class="entrada">9 60 9 62 9 64 9 60</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">todas as suas notas tem duração <code class="entrada">9</code> e frequências numeradas respectivamente por  <code class="entrada">60</code>,  <code class="entrada">62</code>,  <code class="entrada">64</code> e novamente  <code class="entrada">60</code>.</code></span></td></tr>
+            <tr><td><code class="entrada">2 127 3</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">o <code class="entrada">2</code>º trecho tem intensidade <code class="entrada">127</code> e <code class="entrada">3</code> notas</code></span></td></tr>
+            <tr><td><code class="entrada">9 64 9 65 18 67</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">com frequências indicadas por <code class="entrada">64</code>, <code class="entrada">65</code> e <code class="entrada">67</code>, as duas primeiras durações são <code class="entrada">9</code> e a última <code class="entrada">18</code>.</code></span></td></tr>
+            <tr><td><code class="entrada">3 127 6</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">o <code class="entrada">3</code>º trecho tem intensidade <code class="entrada">127</code> e <code class="entrada">6</code> notas</code></span></td></tr>
+            <tr><td><code class="entrada">6 67 3 69 6 67 3 65 9 64 9 60</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">de durações <code class="entrada">6</code>, <code class="entrada">3</code>, <code class="entrada">6</code>, <code class="entrada">3</code>, <code class="entrada">9</code> e <code class="entrada">9</code> e frequências indicadas por <code class="entrada">67</code>, <code class="entrada">69</code>, <code class="entrada">67</code>, <code class="entrada">65</code>, <code class="entrada">64</code> e <code class="entrada">60</code>, respectivamente.</code></span></td></tr>
+            <tr><td><code class="entrada">4 127 3</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">o <code class="entrada">4</code>º trecho tem intensidade <code class="entrada">127</code> e <code class="entrada">3</code> notas</code></span></td></tr>
+            <tr><td><code class="entrada">9 60 9 55 18 60</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">com frequências indicadas por <code class="entrada">60</code>, <code class="entrada">55</code> e, novamente, <code class="entrada">60</code>, as duas primeiras durações são <code class="entrada">9</code> e a última <code class="entrada">18</code>.</span></td></tr>
+            <tr><td><code class="entrada">5 127 1</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">o <code class="entrada">5</code>º trecho tem intensidade <code class="entrada">127</code> e apenas <code class="entrada">1</code> nota ou pausa</code></span></td></tr>
+            <tr><td><code class="entrada">36 128</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">que é uma <code class="entrada">pausa</code> de duração <code class="entrada">36</code></code></span></td></tr>
+            <tr><td><code class="entrada">6 100 3</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">o <code class="entrada">6</code>º  trecho tem intensidade <code class="entrada">100</code> e <code class="entrada">3</code> notas ou pausas</code></span></td></tr>
+            <tr><td><code class="entrada">12 65 12 128 12 71</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">de duração <code class="entrada">12</code> cada. A primeira é uma nota de frequência indicada por <code class="entrada">65</code>, a do meio é uma <code class="entrada">pausa</code> e a última é uma nota de frequência indicada por <code class="entrada">71</code>.</code></span></td></tr>
+            <tr><td><code class="entrada">1 1 2 2 3 3 4 4 5 5 5 5</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">a sequência de trechos para o primeiro canal</code></span></td></tr>
+            <tr><td><code class="entrada">5 5 1 1 2 2 3 3 4 4 5 5</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">a sequência de trechos para o segundo canal</code></span></td></tr>
+            <tr><td><code class="entrada">5 5 5 5 1 1 2 2 3 3 4 4</code></td><td><span style="float:right;"><code class="saida" style="text-align:right">a sequência de trechos para o terceiro canal</code></span></td></tr>
+            </tbody>
+            </table>
+        </div>
+        <p><b><h4{display: inline;}>&nbsp &nbsp Saída</h4></b></p><p> Para gerar a saída você deverá chamar uma única vez a função <code class="codigo">saida(char modo, int numCanais, unsigned short int *canais, int numEventos, TpEvento *eventos)</code>, em que <code class="codigo">modo</code> deve conter o valor <code class="saida">zero</code>, <code class="codigo">numCanais</code> é o número de canais, <code class="codigo">canais</code> é um vetor de <code class="codigo">numCanais</code> posições com os números dos instrumentos para cada canal, <code class="codigo">numEventos</code> é o número de eventos total da instância. Estes eventos estão em um vetor <code class="codigo">eventos</code> cujos elementos são do tipo <code class="codigo">TpEvento</code>, definido a seguir.
+        </p>
+        <p><code class="codigo">typedef struct {<br>
+        &nbsp &nbsp &nbsp &nbsp unsigned short int deltaTime;<br>
+        &nbsp &nbsp &nbsp &nbsp unsigned char canal;<br>
+        &nbsp &nbsp &nbsp &nbsp unsigned char key;<br>
+        &nbsp &nbsp &nbsp &nbsp unsigned char velocity;<br>
+        } TpEvento;</code>
+        </p>
+        <p>
+        Eventos que ocorram antes na música também devem estar em posições anteriores no vetor. No tipo definido acima, <code class="codigo">deltaTime</code> é zero para o evento que ocorra no início da música e, para os demais eventos, marca o tempo transcorrido a partir do momento em que ocorre o evento que aparece na posição imediatamente anterior do vetor. Portanto, se um evento é simultâneo ao evento que o precede no vetor, seu <code class="codigo">deltaTime</code> vale zero. O campo <code class="codigo">canal</code> aceita um número de zero a oito que indica o canal do evento, o campo <code class="codigo">key</code> indica a nota e o campo <code class="codigo">velocity</code>, a intensidade. Para as notas soarem, a intesidade mínima é 1. A intensidade máxima é 127. O evento com <code class="codigo">velocity</code> zero indica que a nota deve ser silenciada no canal (fim de nota).
+        </p>
+        <p>
+        A função <code class="codigo">saida</code>, bem como o tipo <code class="codigo">TpEvento</code> estão definidos na biblioteca <code class="codigo">lab10.h</code>, que deve ser incluída como cabeçalho no seu programa.
+        </p>
+        <p>
+        A chamada deve ser padronizada:
+        <ul>
+            <li>Os canais utilizados devem estar consecutivos e começando em zero.</li>
+            <li>Instrumentos e sequências que aparecem antes na entrada devem utilizar canal com número menor.</li>
+            <li>Eventos em canais menores antecedem eventos simultâneos em canais maiores.</li>
+            <li>Lembre-se de que, em cada canal, é preciso terminar uma nota antes de começar a seguinte.</li>
+        </ul>
+        </p>
+    </div>
+    <hr>
+
+    <div>
+    <div id="exemplos" style="margin-top: 20px;">
+        <h3>Exemplos</h3>
+        <div style="margin-left:30px; margin-top:15px; margin-bottom:15px; border: solid 2px #ccc;  display: inline-block; padding:10px;">
+            <p>
+                <i>Notas:</i>    <br><br>
+                Textos em <code class="entrada">azul</code> designam dados de entrada, isto é, que devem ser lidos pelo seu programa.    <br> 
+                <!-- Textos em <code class="saida">preto</code> designam dados de saída, ou seja, que devem ser impressos pelo seu programa. -->
+            </p>
+        </div id="exemploExec01">
+        <p><strong>Exemplo de execução 1: </strong></p>
+        <div style="margin-left:30px;">
+            <p><code class="entrada">3<br>54 53 54<br>12 6<br>1 127 4<br>9 60 9 62 9 64 9 60<br>2 127 3<br>9 64 9 65 18 67<br>3 127 6<br>6 67 3 69 6 67 3 65 9 64 9 60<br>4 127 3<br>9 60 9 55 18 60<br>5 127 1<br>36 128<br>6 127 3<br>12 65 12 128 12 71<br>1 1 2 2 3 3 4 4 5 5 5 5<br>5 5 1 1 2 2 3 3 4 4 5 5<br>5 5 5 5 1 1 2 2 3 3 4 4<br></code></p>
+            <p><code class="saida"></code></p>
+            <p>
+            Sendo esta a entrada, o seu programa deve chamar <code class="codigo">saida(0, 3, canais, 192, eventos)</code>, em que <code class="codigo">canais</code> contém {53, 54, 54},  <code class="codigo">192</code> é o comprimento do vetor <code class="codigo">eventos</code>, que está representado na tabela a seguir, com um <code class="codigo">TpEvento</code> por linha. A primeira coluna traz a posição no vetor, a segunda o instante em que o evento ocorre na música e as quatro últimas colunas os valores dos campos de cada <code class="codigo">TpEvento</code>.
+            </p>
+        <p>
+        
+        Caso, na chamada à função <code class="codigo">saida</code>, o parâmetro <code class="codigo">modo</code> tenha valor <code class="saida">um</code> em vez de <code class="saida">zero</code>, <code class="codigo">saida</code> coloca o conteúdo <a href="./aux/arq01res.midi">deste arquivo</a> – que pode ser tocado pela maioria dos reprodutores de música na maioria dos sistemas operacionais – na saída padrão.
+            </p>
+            <p>
+            <div style="width:auto; height:600px; overflow: auto;" >
+            <table border="3" align="center">
+            <tbody>
+            <tr><th>evento</th><th>instante</th><th><code class="codigo">deltaTime</code></th><th><code class="codigo">canal</code></th><th><code class="codigo">key</code></th><th><code class="codigo">velocity</code></th></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>1</td><td>36</td><td>36</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>2</td><td>36</td><td>0</td><td>1</td><td>62</td><td>127</td></tr>
+            <tr><td>3</td><td>72</td><td>36</td><td>1</td><td>62</td><td>0</td></tr>
+            <tr><td>4</td><td>72</td><td>0</td><td>1</td><td>64</td><td>127</td></tr>
+            <tr><td>5</td><td>108</td><td>36</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>6</td><td>108</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>7</td><td>144</td><td>36</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>8</td><td>144</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>9</td><td>180</td><td>36</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>10</td><td>180</td><td>0</td><td>1</td><td>62</td><td>127</td></tr>
+            <tr><td>11</td><td>216</td><td>36</td><td>1</td><td>62</td><td>0</td></tr>
+            <tr><td>12</td><td>216</td><td>0</td><td>1</td><td>64</td><td>127</td></tr>
+            <tr><td>13</td><td>252</td><td>36</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>14</td><td>252</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>15</td><td>288</td><td>36</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>16</td><td>288</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>17</td><td>288</td><td>0</td><td>1</td><td>64</td><td>127</td></tr>
+            <tr><td>18</td><td>324</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>19</td><td>324</td><td>0</td><td>0</td><td>62</td><td>127</td></tr>
+            <tr><td>20</td><td>324</td><td>0</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>21</td><td>324</td><td>0</td><td>1</td><td>65</td><td>127</td></tr>
+            <tr><td>22</td><td>360</td><td>36</td><td>0</td><td>62</td><td>0</td></tr>
+            <tr><td>23</td><td>360</td><td>0</td><td>0</td><td>64</td><td>127</td></tr>
+            <tr><td>24</td><td>360</td><td>0</td><td>1</td><td>65</td><td>0</td></tr>
+            <tr><td>25</td><td>360</td><td>0</td><td>1</td><td>67</td><td>127</td></tr>
+            <tr><td>26</td><td>396</td><td>36</td><td>0</td><td>64</td><td>0</td></tr>
+            <tr><td>27</td><td>396</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>28</td><td>432</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>29</td><td>432</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>30</td><td>432</td><td>0</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>31</td><td>432</td><td>0</td><td>1</td><td>64</td><td>127</td></tr>
+            <tr><td>32</td><td>468</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>33</td><td>468</td><td>0</td><td>0</td><td>62</td><td>127</td></tr>
+            <tr><td>34</td><td>468</td><td>0</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>35</td><td>468</td><td>0</td><td>1</td><td>65</td><td>127</td></tr>
+            <tr><td>36</td><td>504</td><td>36</td><td>0</td><td>62</td><td>0</td></tr>
+            <tr><td>37</td><td>504</td><td>0</td><td>0</td><td>64</td><td>127</td></tr>
+            <tr><td>38</td><td>504</td><td>0</td><td>1</td><td>65</td><td>0</td></tr>
+            <tr><td>39</td><td>504</td><td>0</td><td>1</td><td>67</td><td>127</td></tr>
+            <tr><td>40</td><td>540</td><td>36</td><td>0</td><td>64</td><td>0</td></tr>
+            <tr><td>41</td><td>540</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>42</td><td>576</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>43</td><td>576</td><td>0</td><td>0</td><td>64</td><td>127</td></tr>
+            <tr><td>44</td><td>576</td><td>0</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>45</td><td>576</td><td>0</td><td>1</td><td>67</td><td>127</td></tr>
+            <tr><td>46</td><td>576</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>47</td><td>594</td><td>18</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>48</td><td>594</td><td>0</td><td>1</td><td>69</td><td>127</td></tr>
+            <tr><td>49</td><td>612</td><td>18</td><td>0</td><td>64</td><td>0</td></tr>
+            <tr><td>50</td><td>612</td><td>0</td><td>0</td><td>65</td><td>127</td></tr>
+            <tr><td>51</td><td>612</td><td>0</td><td>1</td><td>69</td><td>0</td></tr>
+            <tr><td>52</td><td>612</td><td>0</td><td>1</td><td>67</td><td>127</td></tr>
+            <tr><td>53</td><td>612</td><td>0</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>54</td><td>612</td><td>0</td><td>2</td><td>62</td><td>127</td></tr>
+            <tr><td>55</td><td>630</td><td>18</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>56</td><td>630</td><td>0</td><td>1</td><td>65</td><td>127</td></tr>
+            <tr><td>57</td><td>648</td><td>18</td><td>0</td><td>65</td><td>0</td></tr>
+            <tr><td>58</td><td>648</td><td>0</td><td>0</td><td>67</td><td>127</td></tr>
+            <tr><td>59</td><td>648</td><td>0</td><td>1</td><td>65</td><td>0</td></tr>
+            <tr><td>60</td><td>648</td><td>0</td><td>1</td><td>64</td><td>127</td></tr>
+            <tr><td>61</td><td>648</td><td>0</td><td>2</td><td>62</td><td>0</td></tr>
+            <tr><td>62</td><td>648</td><td>0</td><td>2</td><td>64</td><td>127</td></tr>
+            <tr><td>63</td><td>684</td><td>36</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>64</td><td>684</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>65</td><td>684</td><td>0</td><td>2</td><td>64</td><td>0</td></tr>
+            <tr><td>66</td><td>684</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>67</td><td>720</td><td>36</td><td>0</td><td>67</td><td>0</td></tr>
+            <tr><td>68</td><td>720</td><td>0</td><td>0</td><td>64</td><td>127</td></tr>
+            <tr><td>69</td><td>720</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>70</td><td>720</td><td>0</td><td>1</td><td>67</td><td>127</td></tr>
+            <tr><td>71</td><td>720</td><td>0</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>72</td><td>720</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>73</td><td>738</td><td>18</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>74</td><td>738</td><td>0</td><td>1</td><td>69</td><td>127</td></tr>
+            <tr><td>75</td><td>756</td><td>18</td><td>0</td><td>64</td><td>0</td></tr>
+            <tr><td>76</td><td>756</td><td>0</td><td>0</td><td>65</td><td>127</td></tr>
+            <tr><td>77</td><td>756</td><td>0</td><td>1</td><td>69</td><td>0</td></tr>
+            <tr><td>78</td><td>756</td><td>0</td><td>1</td><td>67</td><td>127</td></tr>
+            <tr><td>79</td><td>756</td><td>0</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>80</td><td>756</td><td>0</td><td>2</td><td>62</td><td>127</td></tr>
+            <tr><td>81</td><td>774</td><td>18</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>82</td><td>774</td><td>0</td><td>1</td><td>65</td><td>127</td></tr>
+            <tr><td>83</td><td>792</td><td>18</td><td>0</td><td>65</td><td>0</td></tr>
+            <tr><td>84</td><td>792</td><td>0</td><td>0</td><td>67</td><td>127</td></tr>
+            <tr><td>85</td><td>792</td><td>0</td><td>1</td><td>65</td><td>0</td></tr>
+            <tr><td>86</td><td>792</td><td>0</td><td>1</td><td>64</td><td>127</td></tr>
+            <tr><td>87</td><td>792</td><td>0</td><td>2</td><td>62</td><td>0</td></tr>
+            <tr><td>88</td><td>792</td><td>0</td><td>2</td><td>64</td><td>127</td></tr>
+            <tr><td>89</td><td>828</td><td>36</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>90</td><td>828</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>91</td><td>828</td><td>0</td><td>2</td><td>64</td><td>0</td></tr>
+            <tr><td>92</td><td>828</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>93</td><td>864</td><td>36</td><td>0</td><td>67</td><td>0</td></tr>
+            <tr><td>94</td><td>864</td><td>0</td><td>0</td><td>67</td><td>127</td></tr>
+            <tr><td>95</td><td>864</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>96</td><td>864</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>97</td><td>864</td><td>0</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>98</td><td>864</td><td>0</td><td>2</td><td>64</td><td>127</td></tr>
+            <tr><td>99</td><td>882</td><td>18</td><td>0</td><td>67</td><td>0</td></tr>
+            <tr><td>100</td><td>882</td><td>0</td><td>0</td><td>69</td><td>127</td></tr>
+            <tr><td>101</td><td>900</td><td>18</td><td>0</td><td>69</td><td>0</td></tr>
+            <tr><td>102</td><td>900</td><td>0</td><td>0</td><td>67</td><td>127</td></tr>
+            <tr><td>103</td><td>900</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>104</td><td>900</td><td>0</td><td>1</td><td>55</td><td>127</td></tr>
+            <tr><td>105</td><td>900</td><td>0</td><td>2</td><td>64</td><td>0</td></tr>
+            <tr><td>106</td><td>900</td><td>0</td><td>2</td><td>65</td><td>127</td></tr>
+            <tr><td>107</td><td>918</td><td>18</td><td>0</td><td>67</td><td>0</td></tr>
+            <tr><td>108</td><td>918</td><td>0</td><td>0</td><td>65</td><td>127</td></tr>
+            <tr><td>109</td><td>936</td><td>18</td><td>0</td><td>65</td><td>0</td></tr>
+            <tr><td>110</td><td>936</td><td>0</td><td>0</td><td>64</td><td>127</td></tr>
+            <tr><td>111</td><td>936</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>112</td><td>936</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>113</td><td>936</td><td>0</td><td>2</td><td>65</td><td>0</td></tr>
+            <tr><td>114</td><td>936</td><td>0</td><td>2</td><td>67</td><td>127</td></tr>
+            <tr><td>115</td><td>972</td><td>36</td><td>0</td><td>64</td><td>0</td></tr>
+            <tr><td>116</td><td>972</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>117</td><td>1008</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>118</td><td>1008</td><td>0</td><td>0</td><td>67</td><td>127</td></tr>
+            <tr><td>119</td><td>1008</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>120</td><td>1008</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>121</td><td>1008</td><td>0</td><td>2</td><td>67</td><td>0</td></tr>
+            <tr><td>122</td><td>1008</td><td>0</td><td>2</td><td>64</td><td>127</td></tr>
+            <tr><td>123</td><td>1026</td><td>18</td><td>0</td><td>67</td><td>0</td></tr>
+            <tr><td>124</td><td>1026</td><td>0</td><td>0</td><td>69</td><td>127</td></tr>
+            <tr><td>125</td><td>1044</td><td>18</td><td>0</td><td>69</td><td>0</td></tr>
+            <tr><td>126</td><td>1044</td><td>0</td><td>0</td><td>67</td><td>127</td></tr>
+            <tr><td>127</td><td>1044</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>128</td><td>1044</td><td>0</td><td>1</td><td>55</td><td>127</td></tr>
+            <tr><td>129</td><td>1044</td><td>0</td><td>2</td><td>64</td><td>0</td></tr>
+            <tr><td>130</td><td>1044</td><td>0</td><td>2</td><td>65</td><td>127</td></tr>
+            <tr><td>131</td><td>1062</td><td>18</td><td>0</td><td>67</td><td>0</td></tr>
+            <tr><td>132</td><td>1062</td><td>0</td><td>0</td><td>65</td><td>127</td></tr>
+            <tr><td>133</td><td>1080</td><td>18</td><td>0</td><td>65</td><td>0</td></tr>
+            <tr><td>134</td><td>1080</td><td>0</td><td>0</td><td>64</td><td>127</td></tr>
+            <tr><td>135</td><td>1080</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>136</td><td>1080</td><td>0</td><td>1</td><td>60</td><td>127</td></tr>
+            <tr><td>137</td><td>1080</td><td>0</td><td>2</td><td>65</td><td>0</td></tr>
+            <tr><td>138</td><td>1080</td><td>0</td><td>2</td><td>67</td><td>127</td></tr>
+            <tr><td>139</td><td>1116</td><td>36</td><td>0</td><td>64</td><td>0</td></tr>
+            <tr><td>140</td><td>1116</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>141</td><td>1152</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>142</td><td>1152</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>143</td><td>1152</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>144</td><td>1152</td><td>0</td><td>2</td><td>67</td><td>0</td></tr>
+            <tr><td>145</td><td>1152</td><td>0</td><td>2</td><td>67</td><td>127</td></tr>
+            <tr><td>146</td><td>1170</td><td>18</td><td>2</td><td>67</td><td>0</td></tr>
+            <tr><td>147</td><td>1170</td><td>0</td><td>2</td><td>69</td><td>127</td></tr>
+            <tr><td>148</td><td>1188</td><td>18</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>149</td><td>1188</td><td>0</td><td>0</td><td>55</td><td>127</td></tr>
+            <tr><td>150</td><td>1188</td><td>0</td><td>2</td><td>69</td><td>0</td></tr>
+            <tr><td>151</td><td>1188</td><td>0</td><td>2</td><td>67</td><td>127</td></tr>
+            <tr><td>152</td><td>1206</td><td>18</td><td>2</td><td>67</td><td>0</td></tr>
+            <tr><td>153</td><td>1206</td><td>0</td><td>2</td><td>65</td><td>127</td></tr>
+            <tr><td>154</td><td>1224</td><td>18</td><td>0</td><td>55</td><td>0</td></tr>
+            <tr><td>155</td><td>1224</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>156</td><td>1224</td><td>0</td><td>2</td><td>65</td><td>0</td></tr>
+            <tr><td>157</td><td>1224</td><td>0</td><td>2</td><td>64</td><td>127</td></tr>
+            <tr><td>158</td><td>1260</td><td>36</td><td>2</td><td>64</td><td>0</td></tr>
+            <tr><td>159</td><td>1260</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>160</td><td>1296</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>161</td><td>1296</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>162</td><td>1296</td><td>0</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>163</td><td>1296</td><td>0</td><td>2</td><td>67</td><td>127</td></tr>
+            <tr><td>164</td><td>1314</td><td>18</td><td>2</td><td>67</td><td>0</td></tr>
+            <tr><td>165</td><td>1314</td><td>0</td><td>2</td><td>69</td><td>127</td></tr>
+            <tr><td>166</td><td>1332</td><td>18</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>167</td><td>1332</td><td>0</td><td>0</td><td>55</td><td>127</td></tr>
+            <tr><td>168</td><td>1332</td><td>0</td><td>2</td><td>69</td><td>0</td></tr>
+            <tr><td>169</td><td>1332</td><td>0</td><td>2</td><td>67</td><td>127</td></tr>
+            <tr><td>170</td><td>1350</td><td>18</td><td>2</td><td>67</td><td>0</td></tr>
+            <tr><td>171</td><td>1350</td><td>0</td><td>2</td><td>65</td><td>127</td></tr>
+            <tr><td>172</td><td>1368</td><td>18</td><td>0</td><td>55</td><td>0</td></tr>
+            <tr><td>173</td><td>1368</td><td>0</td><td>0</td><td>60</td><td>127</td></tr>
+            <tr><td>174</td><td>1368</td><td>0</td><td>2</td><td>65</td><td>0</td></tr>
+            <tr><td>175</td><td>1368</td><td>0</td><td>2</td><td>64</td><td>127</td></tr>
+            <tr><td>176</td><td>1404</td><td>36</td><td>2</td><td>64</td><td>0</td></tr>
+            <tr><td>177</td><td>1404</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>178</td><td>1440</td><td>36</td><td>0</td><td>60</td><td>0</td></tr>
+            <tr><td>179</td><td>1440</td><td>0</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>180</td><td>1440</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>181</td><td>1476</td><td>36</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>182</td><td>1476</td><td>0</td><td>2</td><td>55</td><td>127</td></tr>
+            <tr><td>183</td><td>1512</td><td>36</td><td>2</td><td>55</td><td>0</td></tr>
+            <tr><td>184</td><td>1512</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>185</td><td>1584</td><td>72</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>186</td><td>1584</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>187</td><td>1620</td><td>36</td><td>2</td><td>60</td><td>0</td></tr>
+            <tr><td>188</td><td>1620</td><td>0</td><td>2</td><td>55</td><td>127</td></tr>
+            <tr><td>189</td><td>1656</td><td>36</td><td>2</td><td>55</td><td>0</td></tr>
+            <tr><td>190</td><td>1656</td><td>0</td><td>2</td><td>60</td><td>127</td></tr>
+            <tr><td>191</td><td>1728</td><td>72</td><td>2</td><td>60</td><td>0</td></tr>
+            </tbody>
+            </table>
+            </div>
+        </p>
+        </div id="exemploExec02">
+        <p><strong>Exemplo de execução 2: </strong></p>
+        <div style="margin-left:30px;">
+            <p><code class="entrada">4<br>41 43 42 44<br>4 6<br>1 127 14<br>18 72 18 72 18 79 18 79 18 81 18 81 27 79 9 128 18 77 18 77 18 76 18 76 36 74 36 72<br>2 127 8<br>18 79 18 79 18 77 18 77 18 76 18 76 27 74 9 128<br>3 111 15<br>18 48 18 60 18 64 18 60 18 67 18 60 18 64 18 60 18 62 18 59 18 60 18 57 18 53 18 55 36 48<br>4 95 8<br>18 64 18 55 18 62 18 55 18 60 18 55 18 59 18 55<br>5 63 3<br>108 128 36 55 144 128<br>6 69 5<br>7 128 1 128 3 128 84 128 1 128<br>1 2 2 1<br>6 6 6 5<br>3 4 4 3<br>6 6 6 5<br></code></p>
+            <p><code class="saida"></code></p>
+            <p>
+            Sendo esta a entrada, o seu programa deve chamar <code class="codigo">saida(0, 4, canais, 176, eventos)</code>, em que <code class="codigo">canais</code> contém {41, 42, 43, 44} e <code class="codigo">176</code> é o comprimento do vetor <code class="codigo">eventos</code>, que está representado na tabela a seguir, com um <code class="codigo">TpEvento</code> por linha. A primeira coluna traz a posição no vetor, a segunda o instante em que o evento ocorre na música e as quatro últimas colunas os valores dos campos de cada <code class="codigo">TpEvento</code>.
+            </p>
+            <p>
+        Caso, na chamada à função <code class="codigo">saida</code>, o parâmetro <code class="codigo">modo</code> tenha valor <code class="saida">um</code> em vez de <code class="saida">zero</code>, <code class="codigo">saida</code> coloca o conteúdo <a href="./aux/arq02res.midi">deste arquivo</a> – que pode ser tocado pela maioria dos reprodutores de música na maioria dos sistemas operacionais – na saída padrão.
+            </p>
+            <p>
+            <div style="width:auto; height:600px; overflow: auto;" >
+            <table border="3" align="center">
+            <tbody>
+            <tr><th>evento</th><th>instante</th><th><code class="codigo">deltaTime</code></th><th><code class="codigo">canal</code></th><th><code class="codigo">key</code></th><th><code class="codigo">velocity</code></th></tr>
+            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>72</td><td>127</td></tr>
+            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>48</td><td>111</td></tr>
+            <tr><td>2</td><td>18</td><td>18</td><td>0</td><td>72</td><td>0</td></tr>
+            <tr><td>3</td><td>18</td><td>0</td><td>0</td><td>72</td><td>127</td></tr>
+            <tr><td>4</td><td>18</td><td>0</td><td>1</td><td>48</td><td>0</td></tr>
+            <tr><td>5</td><td>18</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>6</td><td>36</td><td>18</td><td>0</td><td>72</td><td>0</td></tr>
+            <tr><td>7</td><td>36</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>8</td><td>36</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>9</td><td>36</td><td>0</td><td>1</td><td>64</td><td>111</td></tr>
+            <tr><td>10</td><td>54</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>11</td><td>54</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>12</td><td>54</td><td>0</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>13</td><td>54</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>14</td><td>72</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>15</td><td>72</td><td>0</td><td>0</td><td>81</td><td>127</td></tr>
+            <tr><td>16</td><td>72</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>17</td><td>72</td><td>0</td><td>1</td><td>67</td><td>111</td></tr>
+            <tr><td>18</td><td>90</td><td>18</td><td>0</td><td>81</td><td>0</td></tr>
+            <tr><td>19</td><td>90</td><td>0</td><td>0</td><td>81</td><td>127</td></tr>
+            <tr><td>20</td><td>90</td><td>0</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>21</td><td>90</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>22</td><td>108</td><td>18</td><td>0</td><td>81</td><td>0</td></tr>
+            <tr><td>23</td><td>108</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>24</td><td>108</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>25</td><td>108</td><td>0</td><td>1</td><td>64</td><td>111</td></tr>
+            <tr><td>26</td><td>126</td><td>18</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>27</td><td>126</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>28</td><td>135</td><td>9</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>29</td><td>144</td><td>9</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>30</td><td>144</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>31</td><td>144</td><td>0</td><td>1</td><td>62</td><td>111</td></tr>
+            <tr><td>32</td><td>162</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>33</td><td>162</td><td>0</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>34</td><td>162</td><td>0</td><td>1</td><td>62</td><td>0</td></tr>
+            <tr><td>35</td><td>162</td><td>0</td><td>1</td><td>59</td><td>111</td></tr>
+            <tr><td>36</td><td>180</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>37</td><td>180</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>38</td><td>180</td><td>0</td><td>1</td><td>59</td><td>0</td></tr>
+            <tr><td>39</td><td>180</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>40</td><td>198</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>41</td><td>198</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>42</td><td>198</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>43</td><td>198</td><td>0</td><td>1</td><td>57</td><td>111</td></tr>
+            <tr><td>44</td><td>216</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>45</td><td>216</td><td>0</td><td>0</td><td>74</td><td>127</td></tr>
+            <tr><td>46</td><td>216</td><td>0</td><td>1</td><td>57</td><td>0</td></tr>
+            <tr><td>47</td><td>216</td><td>0</td><td>1</td><td>53</td><td>111</td></tr>
+            <tr><td>48</td><td>234</td><td>18</td><td>1</td><td>53</td><td>0</td></tr>
+            <tr><td>49</td><td>234</td><td>0</td><td>1</td><td>55</td><td>111</td></tr>
+            <tr><td>50</td><td>252</td><td>18</td><td>0</td><td>74</td><td>0</td></tr>
+            <tr><td>51</td><td>252</td><td>0</td><td>0</td><td>72</td><td>127</td></tr>
+            <tr><td>52</td><td>252</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>53</td><td>252</td><td>0</td><td>1</td><td>48</td><td>111</td></tr>
+            <tr><td>54</td><td>288</td><td>36</td><td>0</td><td>72</td><td>0</td></tr>
+            <tr><td>55</td><td>288</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>56</td><td>288</td><td>0</td><td>1</td><td>48</td><td>0</td></tr>
+            <tr><td>57</td><td>288</td><td>0</td><td>1</td><td>64</td><td>95</td></tr>
+            <tr><td>58</td><td>306</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>59</td><td>306</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>60</td><td>306</td><td>0</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>61</td><td>306</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>62</td><td>324</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>63</td><td>324</td><td>0</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>64</td><td>324</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>65</td><td>324</td><td>0</td><td>1</td><td>62</td><td>95</td></tr>
+            <tr><td>66</td><td>342</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>67</td><td>342</td><td>0</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>68</td><td>342</td><td>0</td><td>1</td><td>62</td><td>0</td></tr>
+            <tr><td>69</td><td>342</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>70</td><td>360</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>71</td><td>360</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>72</td><td>360</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>73</td><td>360</td><td>0</td><td>1</td><td>60</td><td>95</td></tr>
+            <tr><td>74</td><td>378</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>75</td><td>378</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>76</td><td>378</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>77</td><td>378</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>78</td><td>396</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>79</td><td>396</td><td>0</td><td>0</td><td>74</td><td>127</td></tr>
+            <tr><td>80</td><td>396</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>81</td><td>396</td><td>0</td><td>1</td><td>59</td><td>95</td></tr>
+            <tr><td>82</td><td>396</td><td>0</td><td>2</td><td>55</td><td>63</td></tr>
+            <tr><td>83</td><td>396</td><td>0</td><td>3</td><td>55</td><td>63</td></tr>
+            <tr><td>84</td><td>414</td><td>18</td><td>1</td><td>59</td><td>0</td></tr>
+            <tr><td>85</td><td>414</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>86</td><td>423</td><td>9</td><td>0</td><td>74</td><td>0</td></tr>
+            <tr><td>87</td><td>432</td><td>9</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>88</td><td>432</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>89</td><td>432</td><td>0</td><td>1</td><td>64</td><td>95</td></tr>
+            <tr><td>90</td><td>432</td><td>0</td><td>2</td><td>55</td><td>0</td></tr>
+            <tr><td>91</td><td>432</td><td>0</td><td>3</td><td>55</td><td>0</td></tr>
+            <tr><td>92</td><td>450</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>93</td><td>450</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>94</td><td>450</td><td>0</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>95</td><td>450</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>96</td><td>468</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>97</td><td>468</td><td>0</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>98</td><td>468</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>99</td><td>468</td><td>0</td><td>1</td><td>62</td><td>95</td></tr>
+            <tr><td>100</td><td>486</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>101</td><td>486</td><td>0</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>102</td><td>486</td><td>0</td><td>1</td><td>62</td><td>0</td></tr>
+            <tr><td>103</td><td>486</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>104</td><td>504</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>105</td><td>504</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>106</td><td>504</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>107</td><td>504</td><td>0</td><td>1</td><td>60</td><td>95</td></tr>
+            <tr><td>108</td><td>522</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>109</td><td>522</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>110</td><td>522</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>111</td><td>522</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>112</td><td>540</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>113</td><td>540</td><td>0</td><td>0</td><td>74</td><td>127</td></tr>
+            <tr><td>114</td><td>540</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>115</td><td>540</td><td>0</td><td>1</td><td>59</td><td>95</td></tr>
+            <tr><td>116</td><td>558</td><td>18</td><td>1</td><td>59</td><td>0</td></tr>
+            <tr><td>117</td><td>558</td><td>0</td><td>1</td><td>55</td><td>95</td></tr>
+            <tr><td>118</td><td>567</td><td>9</td><td>0</td><td>74</td><td>0</td></tr>
+            <tr><td>119</td><td>576</td><td>9</td><td>0</td><td>72</td><td>127</td></tr>
+            <tr><td>120</td><td>576</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>121</td><td>576</td><td>0</td><td>1</td><td>48</td><td>111</td></tr>
+            <tr><td>122</td><td>594</td><td>18</td><td>0</td><td>72</td><td>0</td></tr>
+            <tr><td>123</td><td>594</td><td>0</td><td>0</td><td>72</td><td>127</td></tr>
+            <tr><td>124</td><td>594</td><td>0</td><td>1</td><td>48</td><td>0</td></tr>
+            <tr><td>125</td><td>594</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>126</td><td>612</td><td>18</td><td>0</td><td>72</td><td>0</td></tr>
+            <tr><td>127</td><td>612</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>128</td><td>612</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>129</td><td>612</td><td>0</td><td>1</td><td>64</td><td>111</td></tr>
+            <tr><td>130</td><td>630</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>131</td><td>630</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>132</td><td>630</td><td>0</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>133</td><td>630</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>134</td><td>648</td><td>18</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>135</td><td>648</td><td>0</td><td>0</td><td>81</td><td>127</td></tr>
+            <tr><td>136</td><td>648</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>137</td><td>648</td><td>0</td><td>1</td><td>67</td><td>111</td></tr>
+            <tr><td>138</td><td>666</td><td>18</td><td>0</td><td>81</td><td>0</td></tr>
+            <tr><td>139</td><td>666</td><td>0</td><td>0</td><td>81</td><td>127</td></tr>
+            <tr><td>140</td><td>666</td><td>0</td><td>1</td><td>67</td><td>0</td></tr>
+            <tr><td>141</td><td>666</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>142</td><td>684</td><td>18</td><td>0</td><td>81</td><td>0</td></tr>
+            <tr><td>143</td><td>684</td><td>0</td><td>0</td><td>79</td><td>127</td></tr>
+            <tr><td>144</td><td>684</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>145</td><td>684</td><td>0</td><td>1</td><td>64</td><td>111</td></tr>
+            <tr><td>146</td><td>702</td><td>18</td><td>1</td><td>64</td><td>0</td></tr>
+            <tr><td>147</td><td>702</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>148</td><td>711</td><td>9</td><td>0</td><td>79</td><td>0</td></tr>
+            <tr><td>149</td><td>720</td><td>9</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>150</td><td>720</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>151</td><td>720</td><td>0</td><td>1</td><td>62</td><td>111</td></tr>
+            <tr><td>152</td><td>738</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>153</td><td>738</td><td>0</td><td>0</td><td>77</td><td>127</td></tr>
+            <tr><td>154</td><td>738</td><td>0</td><td>1</td><td>62</td><td>0</td></tr>
+            <tr><td>155</td><td>738</td><td>0</td><td>1</td><td>59</td><td>111</td></tr>
+            <tr><td>156</td><td>756</td><td>18</td><td>0</td><td>77</td><td>0</td></tr>
+            <tr><td>157</td><td>756</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>158</td><td>756</td><td>0</td><td>1</td><td>59</td><td>0</td></tr>
+            <tr><td>159</td><td>756</td><td>0</td><td>1</td><td>60</td><td>111</td></tr>
+            <tr><td>160</td><td>774</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>161</td><td>774</td><td>0</td><td>0</td><td>76</td><td>127</td></tr>
+            <tr><td>162</td><td>774</td><td>0</td><td>1</td><td>60</td><td>0</td></tr>
+            <tr><td>163</td><td>774</td><td>0</td><td>1</td><td>57</td><td>111</td></tr>
+            <tr><td>164</td><td>792</td><td>18</td><td>0</td><td>76</td><td>0</td></tr>
+            <tr><td>165</td><td>792</td><td>0</td><td>0</td><td>74</td><td>127</td></tr>
+            <tr><td>166</td><td>792</td><td>0</td><td>1</td><td>57</td><td>0</td></tr>
+            <tr><td>167</td><td>792</td><td>0</td><td>1</td><td>53</td><td>111</td></tr>
+            <tr><td>168</td><td>810</td><td>18</td><td>1</td><td>53</td><td>0</td></tr>
+            <tr><td>169</td><td>810</td><td>0</td><td>1</td><td>55</td><td>111</td></tr>
+            <tr><td>170</td><td>828</td><td>18</td><td>0</td><td>74</td><td>0</td></tr>
+            <tr><td>171</td><td>828</td><td>0</td><td>0</td><td>72</td><td>127</td></tr>
+            <tr><td>172</td><td>828</td><td>0</td><td>1</td><td>55</td><td>0</td></tr>
+            <tr><td>173</td><td>828</td><td>0</td><td>1</td><td>48</td><td>111</td></tr>
+            <tr><td>174</td><td>864</td><td>36</td><td>0</td><td>72</td><td>0</td></tr>
+            <tr><td>175</td><td>864</td><td>0</td><td>1</td><td>48</td><td>0</td></tr>
+            </tbody>
+            </table>
+            </div>
+        </p>
+        </div  id="exemploExec03">
+        
+        </div>
+
+        
+    </div>
+
+    <hr>
+    <div id="observacoesDaTarefa" style="margin-top: 20px;">
+        <h3>Observações da Tarefa</h3>
+        <ul>
+            <li>O campo <code class="codigo">deltaTime</code> nunca precisará ser maior do que 127. A função <code class="codigo">saida</code> não espera encontrar valores maiores do que esse nos eventos.</li>
+            <li>Em todas as entradas, há pelo menos uma nota em algum trecho de alguma sequência.</li>
+            <li>Todo trecho tem pelo menos uma nota ou pausa.</li>
+            <li>Toda nota ou pausa tem duração de pelo menos uma unidade mínima.</li>
+            <li>Defina estruturas para receber os dados de entrada que facilitem a sua manipulação.</li>
+            <li>Lembre-se de que eventos são associados a notas, não a pausas.</li>
+            <li>Caso o primeiro evento não ocorra no começo da música, seu <code class="codigo">deltaTime</code> deve marcar o tempo transcorrido desde o começo da música.</li>
+            <li>Ainda que duas notas seguidas no mesmo canal sejam iguais, é preciso marcar o fim da primeira e o começo da segunda.</li>
+            <li>As instâncias arq03 e arq04 são as mais simples para corrigir eventuais falhas em programas.</li>
+            <li>As instâncias arq09 e arq10 são ländler gerados aleatoriamente a partir do livro de Hummel.</li>
+        </ul>
+    </div>
+    <hr>
+    <div id="observacoes" style="margin-top: 20px;">
+        <h3>Observações Gerais</h3>
+        <ul>
+            <li>O número máximo de submissões é 20.</li>
+            <li>O arquivo <code class="codigo">lab10.c</code> deve conter todo o seu programa.</li>
+            <li>Para a realização dos testes automáticos, a compilação se dará da seguinte forma: <code class="codigo">gcc lab10.c -o lab10 -Wall -Werror -ansi -pedantic</code> .</li>
+            <li>Não se esqueça de incluir no início do programa uma breve descrição dos objetivos, da entrada, da saída, seu nome, RA e turma.</li>
+            <li>Após cada submissão, você deve aguardar um minuto até poder submeter seu trabalho novamente.</li>
+            <li>Ao completar esta tarefa você terá aprendido a manipular registros.</li>
+        </ul>
+    </div>
+    <hr>
+    <div id="criterios" style="margin-top: 20px;">
+        <h3>Critérios Importantes</h3>
+
+        <p>O <b>não</b> cumprimento dos critérios abaixo acarretará em <span style="color:red;font-weight: bold;">nota zero na atividade</span>, independentemente dos resultados dos testes do SuSy.</p>
+        <ul>
+            <li>Sua solução deve atender todos os requisitos definidos no enunciado.</li>
+            <li>Não serão aceitas soluções contendo estruturas não vistas em sala (para este laboratório, poderão ser utilizadas apenas variáveis simples, operações de entrada e saída, operações aritméticas, desvios condicionais, estruturas de repetição, vetores, matrizes, strings, funções, apontadores e registros).</li>
+            <li>Não é permitido o uso de <code class="codigo">continue</code> e <code class="codigo">break</code> (exceto em estruturas do tipo <i>switch-case</i>).</li>
+            <li>Não é permitido o uso de variáveis globais.</li>
+            <li>Cada função deve conter apenas um único <code class="codigo">return</code></li>
+            <li>Os únicos cabeçalhos aceitos para inclusão são <code class="codigo">lab10.h</code>, <code class="codigo">stdlib.h</code> e <code class="codigo">stdio.h</code>.</li>
+        </ul>
+    </div>
+    <hr>
+    <div id="curiosidades" style="margin-top: 20px;">
+        <h3>Para Curiosos Interessados</h3>
+        <p>
+        A figura abaixo representa a correspondência das notas na pauta musical, suas frequências sonoras fundamentais (em Hz) , as teclas do teclado (órgão, piano, etc), nome da nota em inglês (C = dô, D = ré, E = mi, F = fá, G = sol, A = lá, B = si) e seu número MIDI.
+        </p>
+        <p>
+        <div style="text-align:center;" id="figuraAntepenultima">
+            <a href="notesinvert.GIF"><img src="notesinvert.GIF"></a>
+            <br>
+            <i>Produzido por <b></b><a href="mailto:J.Wolfe@unsw.edu.au" target="_top">Joe Wolfe</a>, Universidade de Nova Gales do Sul, Sydney, Austrália.</i>
+        </div>
+        </p>
+        <p>
+        A tabela abaixo indica os instrumentos sugeridos com sua numeração segundo o padrão <i>General Midi</i>, de 1991, comumente empregado pela maior parte de reprodutores de arquivos com extensão <b>.midi</b>:
+        </p>
+        <p>
+            <div style="width:auto; height:600px; overflow: auto;" >
+            <table border="3" align="center">
+            <tbody><tr><th>Número</th><th>Instrumento</th><th>Número</th><th>Instrumento</th></tr>
+            <tr><td>1.</td><td>Piano de cauda</td><td>65.</td><td>Saxofone soprano</td></tr>
+            <tr><td>2.</td><td>Piano brilhante</td><td>66.</td><td>Saxofone contralto</td></tr>
+            <tr><td>3.</td><td>Piano eletro-acústico</td><td>67.</td><td>Saxofone tenor</td></tr>
+            <tr><td>4.</td><td>Piano preparado</td><td>68.</td><td>Saxofone barítono</td></tr>
+            <tr><td>5.</td><td>Piano tipo Fender Rhodes</td><td>69.</td><td>Oboé</td></tr>
+            <tr><td>6.</td><td>Piano tipo DX7</td><td>70.</td><td>Corno inglês</td></tr>
+            <tr><td>7.</td><td>Cravo</td><td>71.</td><td>Fagote</td></tr>
+            <tr><td>8.</td><td>Clavicórdio</td><td>72.</td><td>Clarineta</td></tr>
+            <tr><td>9.</td><td>Celesta</td><td>73.</td><td>Flautim</td></tr>
+            <tr><td>10.</td><td><i>Glockenspiel</i></td><td>74.</td><td>Flauta transversal</td></tr>
+            <tr><td>11.</td><td>Caixinha de música</td><td>75.</td><td>Flauta doce</td></tr>
+            <tr><td>12.</td><td>Vibrafone</td><td>76.</td><td>Zamponha</td></tr>
+            <tr><td>13.</td><td>Marimba</td><td>77.</td><td>Gargalo de garrafa</td></tr>
+            <tr><td>14.</td><td>Xilofone</td><td>78.</td><td><i>Shakuhachi</i></td></tr>
+            <tr><td>15.</td><td>Carrilhão</td><td>79.</td><td>Assobio</td></tr>
+            <tr><td>16.</td><td>Dulcimer</td><td>80.</td><td>Ocarina</td></tr>
+            <tr><td>17.</td><td>Órgão Hammond</td><td>81.</td><td>Onda quadrada</td></tr>
+            <tr><td>18.</td><td>Órgão percussivo</td><td>82.</td><td>Onda dente de serra</td></tr>
+            <tr><td>19.</td><td>Órgão de rock</td><td>83.</td><td>Órgão a vapor</td></tr>
+            <tr><td>20.</td><td>Órgão de igreja</td><td>84.</td><td>Sopro sintético</td></tr>
+            <tr><td>21.</td><td>Harmônio</td><td>85.</td><td>Charanga sintética</td></tr>
+            <tr><td>22.</td><td>Acordeão</td><td>86.</td><td><i>Solo vox</i></td></tr>
+            <tr><td>23.</td><td>Sanfona</td><td>87.</td><td>Dente de serra com quintas paralelas</td></tr>
+            <tr><td>24.</td><td><i>Bandoneón</i></td><td>88.</td><td>Baixo e solo</td></tr>
+            <tr><td>25.</td><td>Violão cordas de <i>nylon</i></td><td>89.</td><td>Fundo <i>New Age</i></td></tr>
+            <tr><td>26.</td><td>Violão cordas de aço</td><td>90.</td><td>Fundo caloroso</td></tr>
+            <tr><td>27.</td><td>Violão de jazz</td><td>91.</td><td><i>Polysynth</i></td></tr>
+            <tr><td>28.</td><td>Guitarra</td><td>92.</td><td>Voz espacial</td></tr>
+            <tr><td>29.</td><td>Guitarra com surdina</td><td>93.</td><td>Vidro friccionado</td></tr>
+            <tr><td>30.</td><td>Guitarra saturada</td><td>94.</td><td>Fundo metálico</td></tr>
+            <tr><td>31.</td><td>Guitarra distorcida</td><td>95.</td><td>Fundo halo</td></tr>
+            <tr><td>32.</td><td>Harmônicos de guitarra</td><td>96.</td><td>Fundo com cobertura de filtro</td></tr>
+            <tr><td>33.</td><td>Baixo acústico</td><td>97.</td><td>Chuva de granizo</td></tr>
+            <tr><td>34.</td><td>Baixo elétrico dedilhado</td><td>98.</td><td>Trilha sonora</td></tr>
+            <tr><td>35.</td><td>Baixo elétrico com palheta</td><td>99.</td><td>Verrofone</td></tr>
+            <tr><td>36.</td><td>Baixo sem trastes</td><td>100.</td><td>Atmosfera</td></tr>
+            <tr><td>37.</td><td>Baixo percutido <i>pop</i></td><td>101.</td><td>Brilhos</td></tr>
+            <tr><td>38.</td><td>Baixo percutido <i>thump</i></td><td>102.</td><td>Duendes</td></tr>
+            <tr><td>39.</td><td>Baixo sintético analógico</td><td>103.</td><td>Ecos</td></tr>
+            <tr><td>40.</td><td>Baixo sintético digital</td><td>104.</td><td>Ficção científica</td></tr>
+            <tr><td>41.</td><td>Violino</td><td>105.</td><td>Sitar</td></tr>
+            <tr><td>42.</td><td>Viola</td><td>106.</td><td>Banjo</td></tr>
+            <tr><td>43.</td><td>Violoncelo</td><td>107.</td><td><i>Shamisen</i></td></tr>
+            <tr><td>44.</td><td>Contrabaixo</td><td>108.</td><td><i>Koto<i/></td></tr>
+            <tr><td>45.</td><td>Cordas em trêmulo</td><td>109.</td><td><i>Kalimba</i></td></tr>
+            <tr><td>46.</td><td>Cordas em <i>pizzicatto</i></td><td>110.</td><td>Gaita de foles</td></tr>
+            <tr><td>47.</td><td>Harpa</td><td>111.</td><td>Rabeca</td></tr>
+            <tr><td>48.</td><td>Tímpanos</td><td>112.</td><td><i>Shehnai</i></td></tr>
+            <tr><td>49.</td><td>Orquestra de cordas</td><td>113.</td><td>Sininhos</td></tr>
+            <tr><td>50.</td><td>Orquestra de cordas de ataque lento</td><td>114.</td><td>Agogô</td></tr>
+            <tr><td>51.</td><td>Cordas sintéticas</td><td>115.</td><td>Tambor de aço</td></tr>
+            <tr><td>52.</td><td>Cordas sintéticas ressonantes</td><td>116.</td><td>Bloco de madeira</td></tr>
+            <tr><td>53.</td><td>Coro</td><td>117.</td><td><i>Taiko</i></td></tr>
+            <tr><td>54.</td><td>Voz solista</td><td>118.</td><td>Timbalões acústicos</td></tr>
+            <tr><td>55.</td><td>Voz sintética</td><td>119.</td><td>Timbalões sintéticos</td></tr>
+            <tr><td>56.</td><td>Batida orquestral</td><td>120.</td><td>Prato revertido</td></tr>
+            <tr><td>57.</td><td>Trompete</td><td>121.</td><td>Corda de violão friccionada</td></tr>
+            <tr><td>58.</td><td>Trombone</td><td>122.</td><td>Respiração</td></tr>
+            <tr><td>59.</td><td>Tuba</td><td>123.</td><td>Mar</td></tr>
+            <tr><td>60.</td><td>Trompete com surdina</td><td>124.</td><td>Pios</td></tr>
+            <tr><td>61.</td><td>Trompa</td><td>125.</td><td>Telefone</td></tr>
+            <tr><td>62.</td><td>Metais</td><td>126.</td><td>Helicóptero</td></tr>
+            <tr><td>63.</td><td>Trompetes e trombones sintéticos</td><td>127.</td><td>Aplausos</td></tr>
+            <tr><td>64.</td><td>Trompas sintéticas</td><td>128.</td><td>Tiros</td></tr>
+            </tbody>
+            </table>
+            </div>
+        </p>
+    </div>
+</body>
+</html>

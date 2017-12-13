@@ -1,0 +1,6 @@
+<preparem> nao se relacionou com nenhum marcador temporal.
+<generosa> se relaciona com <nunca> em 100 % das ocorrencias.
+<povo> se relaciona com <logo> em 100 % das ocorrencias.
+<rei> se relaciona com <nunca> em 25 % das ocorrencias.
+eu sei que sua inteligencia nunca foi nem sera generosa mas preste atencao com paciencia nas minhas palavras preciosas quem presta se concentra pois quero fiquem cientes quando um rei sai outro entra e razao para ficarem contentes preparem ter nova vida uma sensacional chegou era a velha ja gente aonde fica tudo explica por presenca terao recompensa ocupar o meu trono injusticas farei parem bom camarada povo vai logo adorar voces serao mais amados farao tramar vou distribuir premios caros pra amigos estejam afim deixar muito claro nao vao comer nada sem mim golpe do seculo trama sombria bem premeditada calculada rejeitado coroado isso disputo luto tera ser os me desamparem scar mufasa sarabi simba nala kiara kovu sempre 
+5 1 10 2 1 2 1 1 2 1 2 1 2 2 1 1 1 1 1 1 1 8 1 1 2 1 1 2 3 4 1 1 1 9 1 4 1 1 6 1 2 2 1 1 1 2 3 1 2 1 1 1 2 1 3 1 1 1 1 5 2 2 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 2 1 1 1 2 2 2 2 1 1 1 1 1 1 1 1 

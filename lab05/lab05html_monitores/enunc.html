@@ -1,0 +1,266 @@
+<html><head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Laboratório 05 - Pareamento de grifos </title>
+    <style>
+        body {
+            background-color: #f1f1f1;
+            font-family: sans-serif;
+            padding: 30px;
+            text-align: justify;
+        }
+        h1 {
+            font-size: 16pt;
+        }
+        .codigo {
+            /* Utilizado para expressar códigos fonte no enunciado */
+            font-size: 11pt;
+            color: maroon;
+        }
+        .entrada {
+            /* Utilizado para expressar dados de entrada */
+            font-size: 11pt;
+            color: blue;
+        }
+        .saida {
+            /* Utilizado para expressar informações de saídas */
+            font-size: 11pt;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <div style="width: 100%; display: table-cell; content-align:middle; text-align:center; vertical-align:middle;">
+            <h1>Instituto de Computação - UNICAMP</h1>
+            <h2>MC102 - Algoritmos e Programação de Computadores</h2>
+        </div>
+        <div style="width:20%;display: table-cell; vertical-align: middle;">
+            <img src="ic.png" width="120px">
+        </div>
+        <hr>
+        <div>
+            <h2>Laboratório 05: Pareamento de grifos. </h2>
+            <h3>Segundo Semestre de 2017 - Turmas Coordenadas</h3>
+            <p>Peso da Atividade: 2</p>
+            <p>Prazo de Entrega: <u>29 de setembro de 2017 às 23:59:59</u></p>
+        </div>
+        
+        <div style="margin-top:30px;">
+            <h3>Conteúdo</h3>
+            <div style="margin-left:20px;">
+                <a href="#contexto">Contexto</a>
+                <br>
+                <a href="#tarefa">Tarefa</a>
+                <br>
+                <a href="#exemplos">Exemplos</a>
+                <br>
+                <a href="#observacoesDaTarefa">Observações da Tarefa</a>
+                <br>
+                <a href="#observacoes">Observações Gerais</a>
+                <br>
+                <a href="#criterios">Critérios Importantes</a>
+                <br>
+            </div>
+        </div>
+    </div>
+    <hr>
+    <div id="contexto" style="margin-top: 20px;">
+        <h3>Contexto</h3>
+        
+        <div style="width: 50%; text-align: center; display: block; margin: 0 auto;">
+            <h3><em><strong>
+                "Will you, won't you, will you, won't you, join the dance?"
+            </strong></em></h3>
+            <p style="margin: -10px 0 20px 200px"><small>
+                – O grifo e a falsa tartaruga, Quadrilha da Lagosta
+            </small></p>
+        </div>
+        <div align="center">
+        <iframe margin="0" auto width="560" height="315" src="https://www.youtube.com/embed/RAB0Cb97aZE" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <p>
+        Com o aquecimento global e o crescente risco de proliferação de basiliscos, o Centro de Conservação de Grifos está cada vez mais preocupado com a baixa taxa de reprodução desses animais. É cada vez mais raro encontrar ninhos de grifo na natureza, uma vez que a procura por seus ovos de ágata e seus ninhos de ouro ainda leva muitos aventureiros a infringir as leis de proteção ambiental. Por conta disso, as técnicas de manejo e reprodução assistida vêm se desenvolvido bastante.
+        </p>
+        <p>
+        Os pesquisadores do Centro descobriram que a taxa de fertilidade de um cruzamento entre grifos depende muito da compatibilidade entre as danças de acasalamento do macho e da fêmea. Os machos dessa espécie não se preocupam muito com a compatibilidade de seus genes. Há vários casos de machos de grifo copulando com outras espécies relatados na literatura. Como você sabe, é do cruzamento de grifos com éguas que nascem os hipogrifos.
+        </p>
+        <p>
+        Já as fêmeas, são extremamente seletivas. O cio só acontece a cada três anos. O ritual de acasalamento envolve uma complicada dança realizada no dia primeiro de outubro. Uma fêmea e um macho se encontram. A fêmea dança e observa a dança do macho. Caso uma fêmea julgue que o macho não seja compatível, ela vai se retrair e não terá filhotes pelos próximos três anos.
+        </p>
+        <p>
+        Felizmente, é possível evitar que a fêmea se retraia conhecendo de antemão a forma de dança de cada indivíduo. Ao longo dos anos, o Centro registrou as danças dos indivíduos de sua manada e observou que cada animal sempre repete a mesma dança. Além disso, foi possível fazer uma descrição detalhada das fases da dança e de que aspectos de cada fase são considerados pelas fêmeas para o julgamento de compatibilidade. A princípio, os pesquisadores acreditavam que o intrincado padrão de guinchos, a forma do bater das asas e o ondular da cauda fossem relevantes, mas, a custo de muitas tentativas e de muitos erros, acabaram por constatar que apenas a ordem, orientação e amplitude dos deslocamentos no espaço é que são distintivas.
+        </p>
+        <p>
+        Após um trimilique que marca o começo da dança, começa a primeira fase da dança da fêmea, que termina quando ela volta, após alguns passos, ao ponto de partida da dança. Começa, então, a segunda fase, que termina quando, imediatamente após um passo em alguma direção, a fêmea faz um passo de maior amplitude na mesma direção, mas em sentido contrário, passando do ponto de onde viera no passo anterior. A partir daí, começa a terceira fase que segue até que a fêmea pare completamente de dançar e saia voando para escolher um ponto de observação para a dança do macho.
+        </p>
+        <p>
+        As regras observadas pela fêmea em cada fase para consideradar a dança do macho compatível são:
+        </p>
+        <ul>
+        <li>Na primeira fase, a dança do macho deve ter a mesma forma da dança da fêmea, não importando se for rotacionada no espaço. O macho deve fazer sempre passos maiores do que os da fêmea, mas mantendo a proporcionalidade entre as amplitudes dos passos sucessivos. Os ângulos entre passos também devem ser preservados.</li>
+        <li>A segunda fase é mais livre. O macho só não pode ultrapassar a quantidade de passos da fêmea nesta fase. O macho marca da mesma maneira que a fêmea a separação entre a segunda e a terceira fases.</li>
+        <li>Na terceira fase, voltam a ser relevantes para a fêmea as proporções entre as amplitudes dos passos dentro dessa fase, mas os ângulos não precisam mais ser mantidos com tanta precisão: a fêmea não se incomodará se o macho errar o ângulo em até 60°, para mais ou para menos, a cada virada. O macho também sai voando ao final da sua terceira fase. A fêmea rejeita machos cujo número de passos na terceira fase não coincida com o número de passos de sua própria terceira fase.</li>
+        </ul>
+        <p>
+        Em alguns casos, a dança original do macho é incompatível. Entretanto, os pesquisadores perceberam que poderiam produzir um filme holográfico da dança do macho e editar o filme, de maneira que a dança resultante, quando compatível, poderia ser transmitida à fêmea de maneira que a fêmea reconheça o macho e aceite o cruzamento. A única edição aceita pela fêmea é a reversão, em que a dança do macho é apresentada de trás para frente, revertida no tempo. Veja a figura abaixo:
+        <div style="text-align:center;" id="figura1">
+			<a href="reversao.svg"><img src="reversao.svg" width="256px"></a>
+			<br>
+			<i>Figura 1: <b></b>Passos originais e revertidos.</i>
+		</div>
+		</p>
+		<p>
+        Outras formas de edição que não a reversão do vídeo resultaram em fêmeas extremamente ariscas, atacando tratadores, recusando-se a alimentar-se por semanas. Como exemplo, abaixo estão duas versões do mesmo vídeo: a primeira é a original e a segunda a reversa.
+        </p>
+        </div>
+        <div align="center">
+        <iframe margin="0" auto width="320" height="180" src="https://www.youtube.com/embed/oKIbpC4em90" frameborder="0" allowfullscreen></iframe>
+        <p><i>Vídeo original.</i></p>
+        </div>
+        </div>
+        </div>
+        <div align="center">
+        <iframe margin="0" auto width="320" height="180" src="https://www.youtube.com/embed/bd-mivBjnls" frameborder="0" allowfullscreen></iframe>
+        <p><i>Vídeo reverso.</i></p>
+        </div>
+        <p>
+        Nas figuras abaixo, está representado um exemplo de pareamento possível. O primeiro diagrama é a dança registrada de uma fêmea, os passos da primeira e terceira fases estão em preto e os da segunda estão em cinza. Os dois diagramas seguintes representando a dança de um macho. O primeiro deles é o original; o segundo é o revertido, que  é compatível com a dança da fêmea.
+        </p>
+         <div style="text-align:center;" id="figura2">
+			<a href="Femea.svg"><img src="Femea.svg" width="384px"></a>
+			<br>
+			<i>Figura 2: <b></b> Diagrama da dança de uma fêmea.</i>
+		</div>
+        <div style="text-align:center;" id="figura3">
+			<a href="Macho.svg"><img src="Macho.svg" width="384px"></a>
+			<br>
+			<i>Figura 3: <b></b> Diagrama da dança de um macho originalmente incompatível.</i>
+		</div>
+		<div style="text-align:center;" id="figura4">
+			<a href="MachoR.svg"><img src="MachoR.svg" width="384px"></a>
+			<br>
+			<i>Figura 4: <b></b> Diagrama revertido da dança do mesmo macho.</i>
+		</div>
+    </div>
+    
+    <hr>
+    
+    <div id="tarefa" style="margin-top: 20px;">
+        <h3>Tarefa</h3>
+        <p>
+        Você deve escrever um programa que receba o registro de dança de um grifo fêmea e de um grifo macho e decida se eles são compatíveis.
+        </p>
+        <p><b><h4{display: inline;}>Entrada:</h4></b> As danças foram registradas como séries de passos. A entrada começa com uma linha com o número de passos da fêmea e o número de passos do macho, nessa ordem. As duas linhas seguintes trazem as danças da fêmea e do macho, respectivamente. Cada passo está registrado como dois números. O primeiro número indica umas das oito orientações de movimento (veja figura 6, abaixo) e o segundo indica o deslocamento em metros. passos seguidos sempre têm orientações diferentes. Todos os números são inteiros não negativos. Todas as fases da dança da fêmea têm no mínimo dois passos cada.
+        </p>
+        <br>
+         <div style="text-align:center;" id="figura6">
+            <a href="8direction.svg"><img src="8direction.svg"></a>
+            <br>
+            <i>Figura 5: <b></b> As oito direções possíveis.</i>
+        </div>
+        
+        <p><b><h4{display: inline;}>Saída:</h4></b> Uma das três linhas abaixo, conforme a compatibilidade do casal:
+        <ul>
+        <li>Compatibilidade natural.</li>
+        <li>Reverso tem compatibilidade.</li>
+        <li>Incompatibilidade total.</li>
+        </ul>
+        </p>
+        <p>
+        Observe os exemplos e não se esqueça de terminar a saída com quebra de linha (<code class="codigo">\n</code>).
+        </p>
+        
+    </div>
+    <hr>
+    <div id="exemplos" style="margin-top: 20px;">
+        <h3>Exemplo</h3>
+        <div style="margin-left:30px; margin-top:15px; margin-bottom:15px; border: solid 2px #ccc;  display: inline-block; padding:10px;">
+            <p>
+                <i>Notas:</i>    <br><br>
+                Textos em <code class="entrada">azul</code> designam dados de entrada, isto é, que devem ser lidos pelo seu programa.    <br> 
+                Textos em <code class="saida">preto</code> designam dados de saída, ou seja, que devem ser impressos pelo seu programa.
+            </p>
+        </div>
+        <p><strong>Exemplo de execução 1: </strong></p>
+        <div style="margin-left:30px;">
+            <p><code class="entrada">19 18<br>7 2 5 2 7 4 2 8 1 2 3 6 6 8 4 5 2 2 1 1 4 5 7 2 3 5 2 5 1 10 6 5 0 10 2 10 1 5<br>2 3 0 3 2 6 5 12 4 3 6 9 1 12 7 21 6 4 3 4 2 5 6 6 4 4 2 8 0 4 2 8 3 8 1 4</code></p>
+            <p><code class="saida"></code>Compatibilidade natural.</p>
+            <div style="text-align:center;" id="figura6">
+			<a href="arq01.f.svg"><img src="arq01.f.svg" width="384px"></a>
+			<br>
+			<i>Figura 6: <b></b> Diagrama da dança da fêmea no exemplo de execução 1.</i>
+			<br>
+		    </div>
+		    <div style="text-align:center;" id="figura7">
+			<a href="arq01.m.svg"><img src="arq01.m.svg" width="384px"></a>
+			<br>
+			<i>Figura 7: <b></b> Diagrama da dança do macho no exemplo de execução 1.</i>
+			<br>
+		    </div>
+        </div>
+        <p><strong>Exemplo de execução 2: </strong></p>
+        <div style="margin-left:30px;">
+            <p><code class="entrada">19 19<br>2 1 3 2 4 3 5 4 6 1 7 2 0 3 1 4 0 4 5 4 0 1 7 1 6 1 5 1 1 2 7 41 2 29 5 41 2 29<br>5 4 4 3 3 2 2 1 1 4 0 3 7 2 6 1 0 4 5 4 0 1 7 1 6 1 5 1 1 2 7 41 2 29 5 41 2 29</code></p>
+            <p><code class="saida"></code>Incompatibilidade total.</p>
+            <div style="text-align:center;" id="figura8">
+			<a href="arq02.f.svg"><img src="arq02.f.svg" width="384px"></a>
+			<br>
+			<i>Figura 8: <b></b> Diagrama da dança da fêmea no exemplo de execução 2.</i>
+			<br>
+		    </div>
+		    <div style="text-align:center;" id="figura9">
+			<a href="arq02.m.svg"><img src="arq02.m.svg" width="384px"></a>
+			<br>
+			<i>Figura 9: <b></b> Diagrama da dança do macho no exemplo de execução 2.</i>
+			<br>
+		    </div>
+        </div>
+        <p><strong>Exemplo de execução 3: </strong></p>
+        <div style="margin-left:30px;">
+            <p><code class="entrada">18 18<br>6 1 0 1 1 1 2 2 5 1 6 1 4 1 2 2 0 3 2 1 3 1 4 1 6 1 2 4 3 2 4 2 5 2 0 2<br>7 2 3 2 7 2 5 2 6 3 2 1 7 4 5 4 6 1 4 1 0 2 7 2 1 2 0 2 5 4 4 2 3 2 1 2</code></p>
+            <p><code class="saida"></code>Reverso tem compatibilidade.</p>
+        </div>
+        <div style="text-align:center;" id="figura10">
+            <a href="Mock Turtle and Gryphon, Gwynedd Hudson, 1922, public domain.jpg"><img src="Mock Turtle and Gryphon, Gwynedd Hudson, 1922, public domain.jpg" width="512px"></a>
+            <br>
+            <i>Figura 10: <b></b> Grifo dançando com falsa tartaruga e tratadora Alice, Gwynedd Hudson, 1922.</i>
+        </div>
+        <p>
+        <hr>
+    <h3>Observações da Tarefa</h3>
+        <li>Cada dança terá no máximo mil passos e cada passo terá no máximo cem metros.</li>
+        <li>Todas as fases têm pelo menos dois passos cada.</li>
+        <li>No exemplo de execução 1, a primeira fase da fêmea é representada por (7 2 5 2 7 4 2 8 1 2 3 6 6 8), a segunda fase dela é representada por (4 5 2 2 1 1 4 5 7 2 3 5) e a terceira por (2 5 1 10 6 5 0 10 2 10 1 5).</li>
+        <li>No exemplo de execução 3, a primeira fase da fêmea é representada por (6 1 0 1 1 1 2 2 5 1 6 1 4 1), a segunda fase dela é representada por (2 2 0 3 2 1 3 1 4 1 6 1 2 4) e a terceira por (3 2 4 2 5 2 0 2).  Este exemplo é representado nos diagramas das figuras 2 a 4.</li>
+        <li>Todo teste considerado possui apenas uma saída possível.</li>
+        <li>Para realizar este lab, não é necessário utilizar variáveis de ponto flutuante.</li>
+        <li>Diagramas das danças dos casos abertos estão disponíveis na pasta <a href="./aux/">Arquivos Auxiliares</a>.</li>
+    </div>
+    <hr>
+    <div id="observacoes" style="margin-top: 20px;">
+        <h3>Observações Gerais</h3>
+        <ul>
+            <li>O número máximo de submissões é 20.</li>
+            <li>O arquivo <code class="codigo">lab05.c</code> deve conter todo o seu programa.</li>
+            <li>Para a realização dos testes automáticos, a compilação se dará da seguinte forma: <code class="codigo">gcc lab05.c -o lab05 -Wall -Werror -ansi -pedantic</code> .</li>
+            <li>Não se esqueça de incluir no início do programa uma breve descrição dos objetivos, da entrada, da saída, seu nome, RA e turma.</li>
+            <li>Após cada submissão, você deve aguardar um minuto até poder submeter seu trabalho novamente.</li>
+            <li>A sua saída deve terminar com quebra de linha (<code class="codigo">\n</code>).</li>
+            <li>Ao completar esta tarefa você terá aprendido a implementar vetores unidimensionais.</li>
+        </ul>
+    </div>
+    <hr>
+    <div id="criterios" style="margin-top: 20px;">
+        <h3>Critérios Importantes</h3>
+
+        <p>O <b>não</b> cumprimento dos critérios abaixo acarretará em <span style="color:red;font-weight: bold;">nota zero na atividade</span>, independentemente dos resultados dos testes do SuSy.</p>
+        <ul>
+            <li>Sua solução deve atender todos os requisitos definidos no enunciado.</li>
+            <li>Não serão aceitas soluções contendo estruturas não vistas em sala (para este laboratório, poderão ser utilizadas apenas variáveis simples, operações de entrada e saída, operações aritméticas, desvios condicionais, estruturas de repetição e vetores unidimensionais).</li>
+            <li>Não é permitido o uso de vetores multidimensionais.</li>
+            <li>Não é permitido o uso de <code class="codigo">continue</code> e <code class="codigo">break</code> (exceto em estruturas do tipo <i>switch-case</i>).</li>
+            <li>O único cabeçalho aceito para inclusão é <code class="codigo">stdio.h</code>.</li>
+        </ul>
+    </div>
+</body>
+</html>

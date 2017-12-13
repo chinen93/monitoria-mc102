@@ -1,0 +1,1 @@
+Incompatibilidade total.

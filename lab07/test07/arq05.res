@@ -1,0 +1,4 @@
+<bailarina> nao se relacionou com nenhum marcador temporal.
+<missa> se relaciona com <logo> em 100 % das ocorrencias.
+procurando bem todo mundo tem pereba marca de bexiga ou vacina e piriri lombriga ameba so a bailarina que nao coceira verruga nem frieira falta maneira ela futucando piolho cheiro creolina um irmao meio zarolho unha encardida dente com comida casca ferida livra ninguem remela quando acorda as seis da matina teve escarlatina febre amarela medo subir gente cair vertigem quem confessando faz pecado logo assim missa termina primeiro namorado sujo atras orelha bigode groselha calcinha pouco velha o padre tambem pode ate ficar vermelho se vento levanta batina reparando pentelho sala sem mobilia goteira na vasilha problema familia ciranda chico buarque 
+2 5 8 8 23 1 1 8 1 3 1 2 1 1 1 5 7 6 6 12 1 1 5 1 1 1 3 1 1 1 1 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 3 1 1 1 1 1 3 1 2 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 

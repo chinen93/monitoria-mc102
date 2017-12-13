@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg  height='2422.35' width='761.568' xmlns='http://www.w3.org/2000/svg' >
+<rect x='0' y='0' width='761.568' height='2422.35' style='fill:#FFFFFF' />
+<circle cx='64' cy='828.784' r='6.4' style='fill:#0088FF' />
+<text x='64' y='867.184' font-size='32' text-anchor='middle' style='fill:#0088FF' >I</text>
+<line x1='64' y1='828.784' x2='697.568' y2='1462.35' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='697.568' cy='1462.35' r='1.28' style='fill:#000000' />
+<circle cx='695.305' cy='1460.09' r='2.56' style='fill:#000000' />
+<circle cx='693.042' cy='1457.83' r='3.84' style='fill:#000000' />
+<circle cx='690.779' cy='1455.56' r='5.12' style='fill:#000000' />
+<line x1='697.568' y1='1462.35' x2='697.568' y2='2358.35' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='697.568' cy='2358.35' r='1.28' style='fill:#000000' />
+<circle cx='697.568' cy='2355.15' r='2.56' style='fill:#000000' />
+<circle cx='697.568' cy='2351.95' r='3.84' style='fill:#000000' />
+<circle cx='697.568' cy='2348.75' r='5.12' style='fill:#000000' />
+<line x1='697.568' y1='2358.35' x2='64' y2='1724.78' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='64' cy='1724.78' r='1.28' style='fill:#000000' />
+<circle cx='66.2627' cy='1727.05' r='2.56' style='fill:#000000' />
+<circle cx='68.5255' cy='1729.31' r='3.84' style='fill:#000000' />
+<circle cx='70.7882' cy='1731.57' r='5.12' style='fill:#000000' />
+<line x1='64' y1='1724.78' x2='64' y2='828.784' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='64' cy='828.784' r='1.28' style='fill:#000000' />
+<circle cx='64' cy='831.984' r='2.56' style='fill:#000000' />
+<circle cx='64' cy='835.184' r='3.84' style='fill:#000000' />
+<circle cx='64' cy='838.384' r='5.12' style='fill:#000000' />
+<line x1='64' y1='828.784' x2='384' y2='828.784' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='384' cy='828.784' r='1.28' style='fill:#000000' />
+<circle cx='380.8' cy='828.784' r='2.56' style='fill:#000000' />
+<circle cx='377.6' cy='828.784' r='3.84' style='fill:#000000' />
+<circle cx='374.4' cy='828.784' r='5.12' style='fill:#000000' />
+<line x1='384' y1='828.784' x2='192' y2='828.784' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='192' cy='828.784' r='1.28' style='fill:#000000' />
+<circle cx='195.2' cy='828.784' r='2.56' style='fill:#000000' />
+<circle cx='198.4' cy='828.784' r='3.84' style='fill:#000000' />
+<circle cx='201.6' cy='828.784' r='5.12' style='fill:#000000' />
+<line x1='192' y1='828.784' x2='512' y2='828.784' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='512' cy='828.784' r='1.28' style='fill:#000000' />
+<circle cx='508.8' cy='828.784' r='2.56' style='fill:#000000' />
+<circle cx='505.6' cy='828.784' r='3.84' style='fill:#000000' />
+<circle cx='502.4' cy='828.784' r='5.12' style='fill:#000000' />
+<line x1='512' y1='828.784' x2='512' y2='380.784' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='512' cy='380.784' r='1.28' style='fill:#000000' />
+<circle cx='512' cy='383.984' r='2.56' style='fill:#000000' />
+<circle cx='512' cy='387.184' r='3.84' style='fill:#000000' />
+<circle cx='512' cy='390.384' r='5.12' style='fill:#000000' />
+<line x1='512' y1='380.784' x2='195.216' y2='64.0001' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='195.216' cy='64.0001' r='1.28' style='fill:#000000' />
+<circle cx='197.479' cy='66.2628' r='2.56' style='fill:#000000' />
+<circle cx='199.742' cy='68.5256' r='3.84' style='fill:#000000' />
+<circle cx='202.004' cy='70.7883' r='5.12' style='fill:#000000' />
+<line x1='195.216' y1='64.0001' x2='195.216' y2='512' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='195.216' cy='512' r='1.28' style='fill:#000000' />
+<circle cx='195.216' cy='508.8' r='2.56' style='fill:#000000' />
+<circle cx='195.216' cy='505.6' r='3.84' style='fill:#000000' />
+<circle cx='195.216' cy='502.4' r='5.12' style='fill:#000000' />
+<line x1='195.216' y1='512' x2='512' y2='828.784' style='stroke:#000000;stroke-width:2;opacity:0.6' />
+<circle cx='512' cy='828.784' r='1.28' style='fill:#000000' />
+<circle cx='509.737' cy='826.521' r='2.56' style='fill:#000000' />
+<circle cx='507.475' cy='824.258' r='3.84' style='fill:#000000' />
+<circle cx='505.212' cy='821.996' r='5.12' style='fill:#000000' />
+<circle cx='512' cy='828.784' r='6.4' style='fill:#FF0000' />
+<text x='512' y='867.184' font-size='32' text-anchor='middle' style='fill:#FF0000' >F</text>
+</svg>

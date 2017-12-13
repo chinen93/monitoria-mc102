@@ -1,0 +1,3 @@
+<vida> nao se relacionou com nenhum marcador temporal.
+a vida e o dever que nos trouxemos para fazer em casa quando se ve ja sao seis horas sexta feira natal terminou ano perdemos amor da nossa passaram cinquenta anos agora tarde demais ser reprovado me fosse dado um dia outra oportunidade eu nem olhava relogio seguiria sempre frente iria jogando pelo caminho casca dourada inutil das seguraria esta minha diria amo tem mais nao deixe de algo gosta devido falta tempo ter pessoas ao seu lado por puro medo feliz unica tera sera desse infelizmente nunca voltara mario quintana 
+6 2 8 7 1 6 1 1 2 2 2 1 6 7 6 4 1 1 2 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 2 1 1 1 1 1 1 1 1 2 1 1 1 1 1 2 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 5 1 1 1 2 3 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 
